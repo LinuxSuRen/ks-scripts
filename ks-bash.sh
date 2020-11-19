@@ -7,3 +7,10 @@ function ks-devops-disable(){
 function ks-devops-enable(){
 	kubectl -n kubesphere-system patch cc ks-installer -p '{"spec":{"devops":{"enable":true}}}' --type="merge"
 }
+
+function ks-apiserver-update(){
+	kubectl -n kubesphere-system patch deploy ks-apiserver --type='json' -p='[{"op": "replace", "path": "/spec/template/spec/containers/0/image", "value": "$1"}]'
+}
+function ks-controller-update(){
+	kubectl -n kubesphere-system patch deploy ks-controller-manager --type='json' -p='[{"op": "replace", "path": "/spec/template/spec/containers/0/image", "value": "$1"}]'
+}
