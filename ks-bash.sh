@@ -11,6 +11,12 @@ function ks-devops-enable(){
 function ks-apiserver-update(){
 	kubectl -n kubesphere-system patch deploy ks-apiserver --type='json' -p='[{"op": "replace", "path": "/spec/template/spec/containers/0/image", "value": "$1"}]'
 }
+function ks-apiserver-log(){
+	kubectl -n kubesphere-system logs deploy/ks-apiserver --tail 50 -f
+}
 function ks-controller-update(){
 	kubectl -n kubesphere-system patch deploy ks-controller-manager --type='json' -p='[{"op": "replace", "path": "/spec/template/spec/containers/0/image", "value": "$1"}]'
+}
+function ks-controller-log(){
+	kubectl -n kubesphere-system logs deploy/ks-controller-manager --tail 50 -f
 }
