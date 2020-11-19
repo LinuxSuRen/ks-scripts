@@ -14,9 +14,15 @@ function ks-apiserver-update(){
 function ks-apiserver-log(){
 	kubectl -n kubesphere-system logs deploy/ks-apiserver --tail 50 -f
 }
+function ks-apiserver-edit(){
+	kubectl -n kubesphere-system edit deploy/ks-apiserver
+}
 function ks-controller-update(){
 	kubectl -n kubesphere-system patch deploy ks-controller-manager --type='json' -p='[{"op": "replace", "path": "/spec/template/spec/containers/0/image", "value": "$1"}]'
 }
 function ks-controller-log(){
 	kubectl -n kubesphere-system logs deploy/ks-controller-manager --tail 50 -f
+}
+function ks-controller-edit(){
+	kubectl -n kubesphere-system edit deploy/ks-controller-manager
 }
