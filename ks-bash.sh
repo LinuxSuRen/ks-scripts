@@ -27,3 +27,6 @@ function ks-controller-edit(){
 	kubectl -n kubesphere-system edit deploy/ks-controller-manager
 }
 alias ks-j-exec="kubectl -n kubesphere-devops-system exec -it $(kubectl -n kubesphere-devops-system get pod | grep ks-jenkins | awk '{print $1}') bash" 
+function ks-j-log(){
+	kubectl -n kubesphere-devops-system logs deploy/ks-jenkins --tail=50 -f
+}
