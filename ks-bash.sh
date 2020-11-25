@@ -14,6 +14,9 @@ function ks-installer-edit(){
 	kubectl -n kubesphere-system edit cc ks-installer
 }
 
+function ks-pod(){
+	kubectl -n kubesphere-system get pod -w
+}
 function ks-apiserver-update(){
 	kubectl -n kubesphere-system patch deploy ks-apiserver --type='json' -p='[{"op": "replace", "path": "/spec/template/spec/containers/0/image", "value": "'$1'"}]'
 }
@@ -39,6 +42,9 @@ function ks-j-exec(){
 	else
 		kubectl -n kubesphere-devops-system exec -it $pod bash 
 	fi
+}
+function ks-j-edit(){
+	kubectl -n kubesphere-devops-system edit deploy/ks-jenkins
 }
 function ks-j-log(){
 	kubectl -n kubesphere-devops-system logs deploy/ks-jenkins --tail=50 -f
