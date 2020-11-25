@@ -2,16 +2,16 @@
 # source ks-bash.sh
 
 function ks-devops-disable(){
-	kubectl -n kubesphere-system patch cc ks-installer -p '{"spec":{"devops":{"enable":false}}}' --type="merge"
+	kubectl -n kubesphere-system patch cc ks-installer -p '{"spec":{"devops":{"enabled":false}}}' --type="merge"
 }
 function ks-devops-enable(){
-	kubectl -n kubesphere-system patch cc ks-installer -p '{"spec":{"devops":{"enable":true}}}' --type="merge"
+	kubectl -n kubesphere-system patch cc ks-installer -p '{"spec":{"devops":{"enabled":true}}}' --type="merge"
 }
 function ks-installer-log(){
 	kubectl -n kubesphere-system logs deploy/ks-installer --tail 50 -f
 }
 function ks-installer-edit(){
-	kubectl -n kubesphere-system edit deploy/ks-installer
+	kubectl -n kubesphere-system edit cc ks-installer
 }
 
 function ks-apiserver-update(){
