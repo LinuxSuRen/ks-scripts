@@ -43,3 +43,9 @@ function ks-j-exec(){
 function ks-j-log(){
 	kubectl -n kubesphere-devops-system logs deploy/ks-jenkins --tail=50 -f
 }
+function ks-j-on(){
+	kubectl -n kubesphere-devops-system scale deploy/ks-jenkins --replicas=1
+}
+function ks-j-off(){
+	kubectl -n kubesphere-devops-system scale deploy/ks-jenkins --replicas=0
+}
