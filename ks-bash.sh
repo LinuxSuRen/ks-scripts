@@ -10,6 +10,9 @@ function ks-devops-enable(){
 function ks-installer-log(){
 	kubectl -n kubesphere-system logs deploy/ks-installer --tail 50 -f
 }
+function ks-installer-edit(){
+	kubectl -n kubesphere-system edit deploy/ks-installer
+}
 
 function ks-apiserver-update(){
 	kubectl -n kubesphere-system patch deploy ks-apiserver --type='json' -p='[{"op": "replace", "path": "/spec/template/spec/containers/0/image", "value": "'$1'"}]'
@@ -29,7 +32,14 @@ function ks-controller-log(){
 function ks-controller-edit(){
 	kubectl -n kubesphere-system edit deploy/ks-controller-manager
 }
-alias ks-j-exec="kubectl -n kubesphere-devops-system exec -it $(kubectl -n kubesphere-devops-system get pod | grep ks-jenkins | awk '{print $1}') bash" 
+function ks-j-exec(){
+	pod=$(kubectl -n kubesphere-devops-system get pod | grep ks-jenkins | awk '{print $1}')
+	if [[ "$pod" == "" ]]; then
+		echo 'Jenkins is not ready'
+	else
+		kubectl -n kubesphere-devops-system exec -it $pod bash 
+	fi
+}
 function ks-j-log(){
 	kubectl -n kubesphere-devops-system logs deploy/ks-jenkins --tail=50 -f
 }
