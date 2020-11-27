@@ -17,6 +17,8 @@ function ks-installer-edit(){
 function ks-pod(){
 	kubectl -n kubesphere-system get pod -w
 }
+
+# ks apiserver
 function ks-apiserver-update(){
 	kubectl -n kubesphere-system patch deploy ks-apiserver --type='json' -p='[{"op": "replace", "path": "/spec/template/spec/containers/0/image", "value": "'$1'"}]'
 }
@@ -26,6 +28,10 @@ function ks-apiserver-log(){
 function ks-apiserver-edit(){
 	kubectl -n kubesphere-system edit deploy/ks-apiserver
 }
+function ks-apiserver-reset(){
+	ks-apiserver-update "kubesphere/ks-apiserver:v3.0.0"
+}
+
 function ks-controller-update(){
 	kubectl -n kubesphere-system patch deploy ks-controller-manager --type='json' -p='[{"op": "replace", "path": "/spec/template/spec/containers/0/image", "value": "'$1'"}]'
 }
@@ -35,6 +41,10 @@ function ks-controller-log(){
 function ks-controller-edit(){
 	kubectl -n kubesphere-system edit deploy/ks-controller-manager
 }
+function ks-controller-reset(){
+	ks-controller-update "kubesphere/ks-controller-manager:v3.0.0"
+}
+
 function ks-j-exec(){
 	pod=$(kubectl -n kubesphere-devops-system get pod | grep ks-jenkins | awk '{print $1}')
 	if [[ "$pod" == "" ]]; then
@@ -54,4 +64,8 @@ function ks-j-on(){
 }
 function ks-j-off(){
 	kubectl -n kubesphere-devops-system scale deploy/ks-jenkins --replicas=0
+}
+function ks-user-reset(){
+	kubectl patch users $1 -p '{"spec":{"password":"'$2'"}}' --type='merge'
+	kubectl annotate users $1 *- iam.kubesphere.io/password-encrypted- kubesphere.io/creator-
 }
