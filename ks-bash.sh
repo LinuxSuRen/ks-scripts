@@ -70,7 +70,7 @@ function ks-user-reset(){
 	kubectl annotate users $1 *- iam.kubesphere.io/password-encrypted- kubesphere.io/creator-
 }
 
-function kk-install() {
+function kk-install(){
 	curl -L https://github.com/LinuxSuRen/kubekey/releases/download/v1.0.3/kk-linux-amd64.tar.gz | tar xzv
 	sudo mv kk /usr/local/bin/kk
 }
