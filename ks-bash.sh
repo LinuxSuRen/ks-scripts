@@ -17,6 +17,9 @@ function ks-installer-edit(){
 function ks-pod(){
 	kubectl -n kubesphere-system get pod -w
 }
+function ks-devops-pod(){
+	kubectl -n kubesphere-devops-system get pod -w
+}
 
 # ks apiserver
 function ks-apiserver-update(){
