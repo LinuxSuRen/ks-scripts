@@ -13,6 +13,9 @@ function ks-installer-log(){
 function ks-installer-edit(){
 	kubectl -n kubesphere-system edit cc ks-installer
 }
+function ks-installer-update(){
+	kubectl -n kubesphere-system patch deploy ks-installer --type='json' -p='[{"op": "replace", "path": "/spec/template/spec/containers/0/image", "value": "'$1'"}]'
+}
 
 function ks-pod(){
 	kubectl -n kubesphere-system get pod -w
