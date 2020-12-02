@@ -34,7 +34,16 @@ function ks-apiserver-edit(){
 function ks-apiserver-reset(){
 	ks-apiserver-update "kubesphere/ks-apiserver:v3.0.0"
 }
+function ks-apiserver-del-pod(){
+	pod=$(kubectl -n kubesphere-system get pod | grep ks-apiserver | awk '{print $1}')
+	if [[ "$pod" == "" ]]; then
+		echo 'ks-apiserver is not ready'
+	else
+		kubectl -n kubesphere-system delete pod $pod
+	fi
+}
 
+# controller
 function ks-controller-update(){
 	kubectl -n kubesphere-system patch deploy ks-controller-manager --type='json' -p='[{"op": "replace", "path": "/spec/template/spec/containers/0/image", "value": "'$1'"}]'
 }
@@ -47,7 +56,21 @@ function ks-controller-edit(){
 function ks-controller-reset(){
 	ks-controller-update "kubesphere/ks-controller-manager:v3.0.0"
 }
+function ks-controller-del-pod(){
+	pod=$(kubectl -n kubesphere-system get pod | grep ks-controller-manager | awk '{print $1}')
+	if [[ "$pod" == "" ]]; then
+		echo 'ks-controller is not ready'
+	else
+		kubectl -n kubesphere-system delete pod $pod
+	fi
+}
 
+# console
+function ks-console-update(){
+	kubectl -n kubesphere-system patch deploy ks-console --type='json' -p='[{"op": "replace", "path": "/spec/template/spec/containers/0/image", "value": "'$1'"}]'
+}
+
+# jenkins
 function ks-j-exec(){
 	pod=$(kubectl -n kubesphere-devops-system get pod | grep ks-jenkins | awk '{print $1}')
 	if [[ "$pod" == "" ]]; then
