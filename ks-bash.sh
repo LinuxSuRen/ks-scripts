@@ -38,6 +38,7 @@ function ks-apiserver-reset(){
 	ks-apiserver-update "kubesphere/ks-apiserver:v3.0.0"
 }
 function ks-apiserver-del-pod(){
+	local pod
 	pod=$(kubectl -n kubesphere-system get pod | grep ks-apiserver | awk '{print $1}')
 	if [[ "$pod" == "" ]]; then
 		echo 'ks-apiserver is not ready'
@@ -60,6 +61,7 @@ function ks-controller-reset(){
 	ks-controller-update "kubesphere/ks-controller-manager:v3.0.0"
 }
 function ks-controller-del-pod(){
+	local pod
 	pod=$(kubectl -n kubesphere-system get pod | grep ks-controller-manager | awk '{print $1}')
 	if [[ "$pod" == "" ]]; then
 		echo 'ks-controller is not ready'
@@ -75,6 +77,7 @@ function ks-console-update(){
 
 # jenkins
 function ks-j-exec(){
+	local pod
 	pod=$(kubectl -n kubesphere-devops-system get pod | grep ks-jenkins | awk '{print $1}')
 	if [[ "$pod" == "" ]]; then
 		echo 'Jenkins is not ready'
@@ -104,4 +107,11 @@ function kk-install(){
 	sudo mv kk /usr/local/bin/kk
 }
 
-alias ks-script-update='cd ~/.ks-scripts && git pull && source ~/.bashrc'
+function ks-script-fetch(){
+	if [ ! -a "~/.ks-scripts" ]; then
+    	cd ~/.ks-scripts && git pull
+	else
+		git clone https://github.com/LinuxSuRen/ks-scripts/ ~/.ks-scripts
+	fi
+}
+alias ks-script-update='ks-script-fetch && if [[ "$SHELL" == "/bin/zsh" ]]; then source ~/.zshrc; elif [[ "$SHELL" == "/bin/bash" ]]; then source ~/.bashrc; fi'
