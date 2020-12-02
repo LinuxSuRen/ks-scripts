@@ -104,6 +104,4 @@ function kk-install(){
 	sudo mv kk /usr/local/bin/kk
 }
 
-function ks-script-update(){
-	cd ~/.ks-scripts && git pull
-}
+alias ks-script-update='cd ~/.ks-scripts && git pull && source ~/.bashrc'
