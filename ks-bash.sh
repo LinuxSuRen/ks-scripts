@@ -37,6 +37,9 @@ function ks-apiserver-edit(){
 function ks-apiserver-reset(){
 	ks-apiserver-update "kubesphere/ks-apiserver:v3.0.0"
 }
+function ks-apiserver-reset-latest(){
+	ks-apiserver-update "kubespheredev/ks-apiserver:latest"
+}
 function ks-apiserver-del-pod(){
 	local pod
 	pod=$(kubectl -n kubesphere-system get pod | grep ks-apiserver | awk '{print $1}')
@@ -60,6 +63,9 @@ function ks-controller-edit(){
 function ks-controller-reset(){
 	ks-controller-update "kubesphere/ks-controller-manager:v3.0.0"
 }
+function ks-controller-reset-latest(){
+	ks-controller-update "kubespheredev/ks-controller-manager:latest"
+}
 function ks-controller-del-pod(){
 	local pod
 	pod=$(kubectl -n kubesphere-system get pod | grep ks-controller-manager | awk '{print $1}')
@@ -76,6 +82,9 @@ function ks-console-update(){
 }
 function ks-console-reset(){
 	ks-console-update "kubesphere/ks-console:v3.0.0"
+}
+function ks-console-reset-latest(){
+	ks-console-update "kubespheredev/ks-console:latest"
 }
 
 # jenkins
