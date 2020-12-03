@@ -74,6 +74,9 @@ function ks-controller-del-pod(){
 function ks-console-update(){
 	kubectl -n kubesphere-system patch deploy ks-console --type='json' -p='[{"op": "replace", "path": "/spec/template/spec/containers/0/image", "value": "'$1'"}]'
 }
+function ks-console-reset(){
+	ks-controller-update "kubesphere/ks-console:v3.0.0"
+}
 
 # jenkins
 function ks-j-exec(){
