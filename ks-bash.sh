@@ -117,8 +117,9 @@ function ks-script-fetch(){
 function ks-build(){
 	# we need to build a particular binary instead of default one in some cases
 	if [[ "${KS_BUILD_GOOS}" != "" ]]; then
-		GOOS=${KS_BUILD_GOOS}
+		GOOS=${KS_BUILD_GOOS} make docker-build-no-test
+  else
+	  make docker-build-no-test
 	fi
-	make docker-build-no-test
 }
 alias ks-script-update='ks-script-fetch && if [[ "$SHELL" == "/bin/zsh" ]]; then source ~/.zshrc; elif [[ "$SHELL" == "/bin/bash" ]]; then source ~/.bashrc; fi'
