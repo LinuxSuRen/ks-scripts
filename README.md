@@ -13,3 +13,6 @@ I highly recommend you install `bash-completion` if you want have an easy shell 
 You can install it by one of the following commands:
 
 `apt install bash-completion -y`
+
+# Kubesphere client by Golang
+[ks](https://github.com/LinuxSuRen/ks) is written by Golang. It'll replace [ks-scripts](https://github.com/LinuxSuRen/ks-scripts/) in the futher.
