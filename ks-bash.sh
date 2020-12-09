@@ -80,6 +80,9 @@ function ks-controller-del-pod(){
 }
 
 # console
+function ks-console-edit(){
+	kubectl -n kubesphere-system edit deploy/ks-console
+}
 function ks-console-update(){
 	kubectl -n kubesphere-system patch deploy ks-console --type='json' -p='[{"op": "replace", "path": "/spec/template/spec/containers/0/image", "value": "'$1'"}]'
 }
