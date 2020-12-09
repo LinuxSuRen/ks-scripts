@@ -89,6 +89,15 @@ function ks-console-reset(){
 function ks-console-reset-latest(){
 	ks-console-update "kubespheredev/ks-console:latest"
 }
+function ks-console-del-pod(){
+	local pod
+	pod=$(kubectl -n kubesphere-system get pod | grep ks-console | awk '{print $1}')
+	if [[ "$pod" == "" ]]; then
+		echo 'ks-console is not ready'
+	else
+		kubectl -n kubesphere-system delete pod $pod
+	fi
+}
 
 # jenkins
 function ks-j-exec(){
